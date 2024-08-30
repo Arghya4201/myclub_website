@@ -1,0 +1,35 @@
+{%extends 'events/base.html'%}
+
+{%block content%}
+
+<h1>Events</h1>
+{% for event in event_list %}
+
+<div class="card">
+    <div class="card-header">
+        <strong>{{event}}</strong>
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">{{event.venue}}</h5>
+        <p class="card-text">
+        <ul>
+            <li>Date: {{event.event_date}}</li>
+            <li>Venue Website: {{event.venue.web}}</li>
+            <li>Manager: {{event.manager}}</li>
+            <li>Description: {{event.description}}</li>
+            <!-- Attendees = event.attendees.all This gives us the whole query set of all the attendees and we have to loop thru to get all of them individually -->
+            Attendees:<br>
+            {% for attendee in event.attendees.all %}
+            {{attendee}}<br>
+            {% endfor %}
+        </ul>
+        </p>
+    </div>
+</div>
+
+
+
+{% endfor %}
+
+
+{%endblock%}

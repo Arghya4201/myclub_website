@@ -1,0 +1,17 @@
+{%extends 'events/base.html'%}
+{%block content%}
+<center>
+    <h1>Add details for the Venue</h1>
+    <!-- Fecthes the submitted value that was passed thru context -->
+     <!-- If the form is submitted we display success message else we display the form -->
+    {% if submitted %}
+    Your form has been successfully submitted
+    {% else %}
+    <form action="" method="POST">
+        {%csrf_token%}
+        {{form.as_p}}
+        <input type="submit" value="Submit" class="btn btn-success">
+    </form>
+    {% endif %}
+</center>
+{%endblock%}
