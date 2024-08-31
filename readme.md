@@ -107,3 +107,13 @@ Readme_myClubWebsite6
       if 'submitted' in request.GET
     This GET method would check the things after ? in URL and if it finds submitted (which it will due to form redirection URL after submission) then we set submitted= TRUE
     ->If nothing of these 2 happens i.e neither details are submitted nor we have submitted in URL so GET method doesn't get submitted, we again just render the venuw form page with default form and submitted value
+
+>>>>>
+Readme_myClubWebsite7
+
+->Every object in a model has an uniqueID. So we use that to display each of them seperately
+->The flow used here is
+   . Pass the id in the URL as done in urls.py file "show_venue/venueID"
+   . Then pass that venueID in the view method
+   . Get that particular venue by using the passed venuwID of that particular object using the venueID as a primaryKey (pk)
+   . Return and render the particular venuw page and pass the venue as context
