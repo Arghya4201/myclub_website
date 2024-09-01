@@ -8,6 +8,15 @@ from django.http import HttpResponseRedirect
 
 
 # Create your views here.
+def search_venues(request):
+    if(request.method == "POST"):
+        #Using POST instead of GET because we are getting data from the form and not from the URL
+        #Seached is the name of the input in the form (see navbar.html the from tag above the search input tag)
+        searched = request.POST["searched"]
+        venues = Venue.objects.filter(name__contains=searched)
+        return render(request, "events/search_venues.html", {"searched": searched, "venues": venues})
+    else:
+        return render(request, "events/search_venues.html", {})
 def show_venue(request, venue_id):
     #Readme_myClubWebsite7
     venue = Venue.objects.get(pk=venue_id)

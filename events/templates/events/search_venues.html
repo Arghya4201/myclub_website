@@ -1,0 +1,15 @@
+{%extends 'events/base.html'%}
+
+{%block content%}
+<center>
+    <!-- We passed search through context of views.search_venues method -->
+    {% if searched %}
+    <h1>You searched for {{searched}}</h1>
+    {% for venue in venues %}
+    <a href="{% url 'show-venue' venue.id %}">{{venue.name}}</a> <br>
+    {% endfor %}
+    {% else %}
+    <h1>You did not search for anything</h1>
+    {% endif %}
+</center>
+{%endblock%}
