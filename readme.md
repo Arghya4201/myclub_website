@@ -19,8 +19,8 @@ Steps to make the db:
      ii> python manage.py migrate #to apply those migrations to the database
      
 >>>>>
-To access the objects in the databases, we run the command "python manage.py shell" to enter queery mode
-  after this we can run queries in the terminal to access the bojetcs as shown below
+To access the objects in the databases, we run the command "python manage.py shell" to enter query mode
+  after this we can run queries in the terminal to access the objects as shown below
 
   from home.models import contact (imports the contact table)
   Contact.objects.all() (gives list of all objects in Contact table)
@@ -41,8 +41,8 @@ Path Converters:
 int: numbers
 str: strings
 path: whole urls/
-slug: undercore and hyphened stuffs
-UUID: universallyunique ID
+slug: underscore and hyphened stuffs
+UUID: universally unique ID
 
 >>>>>
 Safe rendering
@@ -91,6 +91,7 @@ Readme_myClubWebsite4
 Readme_myClubWebsite5
     ->Creating a form for venue model that is why we mention 'model=Venue'
     ->fields = '__all__' creates a form with all the fields in the Venue model. We can also mention seperately if we want
+    -> This is a vustom form class named VenueForm and we can call an instance of this in our views methods like in add_venue and update_venue function function
 
 >>>>>
 Readme_myClubWebsite6
@@ -116,4 +117,16 @@ Readme_myClubWebsite7
    . Pass the id in the URL as done in urls.py file "show_venue/venueID"
    . Then pass that venueID in the view method
    . Get that particular venue by using the passed venuwID of that particular object using the venueID as a primaryKey (pk)
-   . Return and render the particular venuw page and pass the venue as context
+   . The get method gets the venueID from the URL 
+   . Return and render the particular venue page and pass the venue as context
+
+>>>>>
+Readme_myClubWebsite8
+
+->Making another instance of Venueform class. Since its the instance of the same class that we used to add the venue so we dont have to create the form structure again, just re-use it
+->The prev line had the details/instance of a particular venue stored in the 'venue' variable using the respective primary key, so we pass that in the form so that the generated form would already have the details filled of that form
+->Update function means update the data and then submit
+  . When updating then no data is posted so method = none (filling out the form)
+  . When submitting the updated data the for type is post (submitting the filled form)
+  In case of update in both these cases we want to render the update_venue html page so we included both condition in the form, (post and none)
+-> When someone submits data to the form we heck if its valid, save the form and redirect back to the venue list page

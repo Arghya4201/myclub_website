@@ -9,6 +9,9 @@
             <!-- pointing to show-venue and passing venue id as parameter so it would be /show_venue/id -->
             <a href="{% url 'show-venue' venue.id %}">{{ venue }}</a> <br>
         </td>
+        <td>
+            <a href="{% url 'update-venue' venue.id %}" class="btn btn-sm btn-outline-dark">Update</a>
+        </td>
     </tr>
     {% endfor %}
 </table>

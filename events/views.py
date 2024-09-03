@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 import calendar
 from calendar import HTMLCalendar
 from datetime import datetime
@@ -8,6 +8,15 @@ from django.http import HttpResponseRedirect
 
 
 # Create your views here.
+def update_venues(request,venue_id):
+    venue = Venue.objects.get(pk=venue_id)
+    # Readme_myClubWebsite8
+    form = VenueForm(request.POST or None , instance=venue)
+    if(form.is_valid()):
+        form.save()
+        return redirect('list-venues')
+    return render(request, "events/update_venue.html", {"venue": venue, "form": form})
+
 def search_venues(request):
     if(request.method == "POST"):
         #Using POST instead of GET because we are getting data from the form and not from the URL
@@ -17,6 +26,7 @@ def search_venues(request):
         return render(request, "events/search_venues.html", {"searched": searched, "venues": venues})
     else:
         return render(request, "events/search_venues.html", {})
+    
 def show_venue(request, venue_id):
     #Readme_myClubWebsite7
     venue = Venue.objects.get(pk=venue_id)
@@ -30,6 +40,7 @@ def list_venues(request):
 def add_venue(request):
     submitted = False
     if request.method == "POST":
+        #Creating an object of the VenueForm class
         form = VenueForm(request.POST)
         if form.is_valid():
             form.save()
