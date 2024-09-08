@@ -19,13 +19,20 @@
             <li>Description: {{event.description}}</li>
             <!-- Attendees = event.attendees.all This gives us the whole query set of all the attendees and we have to loop thru to get all of them individually -->
             Attendees:<br>
+            {%if event.attendees.all %}
             {% for attendee in event.attendees.all %}
             {{attendee}}<br>
             {% endfor %}
-        </br>
-            <a href="{% url 'update-event' event.id %}" class="btn btn-sm btn-outline-dark">Update</a>
+            {% else %}
+            No attendees
+            {% endif %}
+            </br>
         </ul>
         </p>
+    </div>
+    <div class="card-header">
+        <a href="{% url 'update-event' event.id %}" class="btn btn-sm btn-outline-dark">Update</a>
+        <a href="{% url 'delete-event' event.id %}" class="btn btn-sm btn-outline-danger">Delete</a>
     </div>
 </div>
 {% endfor %}
