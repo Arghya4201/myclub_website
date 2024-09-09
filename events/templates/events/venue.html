@@ -3,7 +3,7 @@
 {%block content%}
 <table class="table table-striped table-hover table-bordered">
     <h1>Venues...</h1>
-    {% for venue in venues %}
+    {% for venue in venues_paginated %}
     <tr>
         <td>
             <!-- pointing to show-venue and passing venue id as parameter so it would be /show_venue/id -->
@@ -16,4 +16,15 @@
     </tr>
     {% endfor %}
 </table>
+{% if venues_paginated.has_previous %}
+<a href="?page=1">&lAarr;</a>
+<a href="?page={{venues_paginated.previous_page_number}}">&larr;</a>
+{% endif %}
+
+Page {{venues_paginated.number}} of {{venues_paginated.paginator.num_pages}}
+
+{% if venues_paginated.has_next %}
+<a href="?page={{venues_paginated.next_page_number}}">&rarr;</a>
+<a href="?page={{venues_paginated.paginator.num_pages}}">&rAarr;</a>
+{% endif %}
 {%endblock%}

@@ -7,11 +7,15 @@ from .forms import VenueForm, EventForm
 from django.http import HttpResponseRedirect,HttpResponse
 import csv
 
+#IMPORT PDF STUFFS
 from django.http import FileResponse
 import io
 from reportlab.pdfgen import canvas
 from reportlab.lib.units import inch
 from reportlab.lib.pagesizes import letter
+
+#IMPORT PAGINATOR STUFFS
+from django.core.paginator import Paginator
 
 # Create your views here.
 
@@ -136,7 +140,10 @@ def show_venue(request, venue_id):
     
 def list_venues(request):
     venue_list = Venue.objects.all().order_by("name")
-    return render(request, "events/venue.html", {"venues": venue_list})
+    p = Paginator(venue_list, 1)
+    page = request.GET.get('page')
+    venues_paginated = p.get_page(page)
+    return render(request, "events/venue.html", {"venues": venue_list, "venues_paginated": venues_paginated})
 
 # Readme_myClubWebsite6
 def add_venue(request):
