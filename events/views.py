@@ -7,7 +7,52 @@ from .forms import VenueForm, EventForm
 from django.http import HttpResponseRedirect,HttpResponse
 import csv
 
+from django.http import FileResponse
+import io
+from reportlab.pdfgen import canvas
+from reportlab.lib.units import inch
+from reportlab.lib.pagesizes import letter
+
 # Create your views here.
+
+#NOT WORKING
+def venues_pdf(request):
+    #Create bytestream buffer
+    buf = io.BytesIO()
+    #create a canvas
+    c = canvas.Canvas(buf, pagesize=letter, bottomup=0)
+    #create text object
+    textob = c.beginText()
+    textob.setTextOrigin(inch, inch)
+    textob.setFont('Helvetica', 14)
+
+    #Add some lines of text
+    #lines = ['First line of text', 'Second line of text', 'Third line of text']
+    #for line in lines:
+    #    textob.textLine(line)
+    venues = Venue.objects.all()
+
+    lines = []
+    for venue in venues:
+        lines.append(venue.name)
+        lines.append(venue.address)
+        lines.append(venue.zip_code)
+        lines.append(venue.phone)
+        lines.append(venue.web)
+        lines.append(venue.email)
+        lines.append("\n")
+     
+    #Loop through the list and append in pdf file one by one    
+    for line in lines:
+        textob.textLine(line)
+
+    #Finish
+    c.drawText(textob)
+    c.showPage()
+    c.save()
+    buf.seek(0)
+
+    return FileResponse(buf, as_attachment=True, filename='venue.pdf')
 
 #Generate text file for venue list
 def venues_text(request):
