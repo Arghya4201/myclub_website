@@ -5,7 +5,7 @@ from datetime import datetime
 from .models import Event, Venue
 from .forms import VenueForm, EventForm
 from django.http import HttpResponseRedirect,HttpResponse
-
+import csv
 
 # Create your views here.
 
@@ -13,12 +13,27 @@ from django.http import HttpResponseRedirect,HttpResponse
 def venues_text(request):
     Venues = Venue.objects.all()
     response = HttpResponse(content_type='text/plain')
+    #This line would download the file in our local computer
+    response['content-disposition'] = 'attachment; filename=venues.txt'
     #A blank list
     list = []
     for venue in Venues:
         list.append(f'{venue.name}\n{venue.address}\n{venue.zip_code}\n{venue.phone}\n{venue.web}\n{venue.email}\n\n')
     response.writelines("%s\n" % venue for venue in list)
     return response
+
+#Venue CSV file generate
+def venues_csv(request):
+    venues = Venue.objects.all()
+    response = HttpResponse(content_type='text/csv')
+    response['content-disposition'] = 'attachment; filename=venues.csv'
+    #Create a csv writer object
+    writer = csv.writer(response)
+    writer.writerow(['Name', 'Address', 'Zip Code', 'Phone', 'Web', 'Email'])
+    for venue in venues:
+        writer.writerow([venue.name, venue.address, venue.zip_code, venue.phone, venue.web, venue.email])
+    return response
+    
 def delete_venue(request, venue_id):
     venue = Venue.objects.get(pk=venue_id)
     venue.delete()
