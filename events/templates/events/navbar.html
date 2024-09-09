@@ -10,9 +10,9 @@
           <li class="nav-item">
             <a class="nav-link active text-light" aria-current="page" href="{% url 'list-events' %}">Events</a>
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a class="nav-link active text-light" aria-current="page" href="{% url 'add-event' %}">Add Events</a>
-          </li>
+          </li> -->
           <li class="nav-item">
             <!-- Readme myClubWebsite2 -->
             <a class="nav-link text-light" href="{% url 'home' '2024' 'June' %}">June 2024</a>
@@ -22,11 +22,11 @@
           </li>
           <li class="nav-item dropdown bg-dark">
             <a class="nav-link dropdown-toggle  text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Forms
+              Add
             </a>
             <ul class="dropdown-menu bg-dark">
               <li><a class="dropdown-item text-light" href="{% url 'add-venue' %}">Add_Venue</a></li>
-              <li><a class="dropdown-item text-light" href="#">Another action</a></li>
+              <li><a class="dropdown-item text-light" href="{% url 'add-event' %}">Add Event</a></li>
               <li><hr class="dropdown-divider" style="border-color: #eef0f2;"></li>
               <li><a class="dropdown-item text-light" href="#">Something else here</a></li>
             </ul>
