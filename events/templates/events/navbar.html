@@ -31,6 +31,25 @@
               <li><a class="dropdown-item text-light" href="#">Something else here</a></li>
             </ul>
           </li>
+          <li class="nav-item dropdown bg-dark">
+            <a class="nav-link dropdown-toggle  text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Generate Files
+            </a>
+            <ul class="dropdown-menu bg-dark">
+              <li><a class="dropdown-item text-light" href="{% url 'venues-text' %}">Venue-List Text File</a></li>
+              <li><a class="dropdown-item text-light" href="{% url 'add-event' %}">Add Event</a></li>
+              <li><hr class="dropdown-divider" style="border-color: #eef0f2;"></li>
+              <li><a class="dropdown-item text-light" href="#">Something else here</a></li>
+            </ul>
+          </li>
+        </ul>
+        <ul class="dropdown-menu bg-dark">
+              <li><a class="dropdown-item text-light" href="{% url 'add-venue' %}">Add_Venue</a></li>
+              <li><a class="dropdown-item text-light" href="{% url 'add-event' %}">Add Event</a></li>
+              <li><hr class="dropdown-divider" style="border-color: #eef0f2;"></li>
+              <li><a class="dropdown-item text-light" href="#">Something else here</a></li>
+            </ul>
+          </li>
         </ul>
         <form class="d-flex" role="search" method=POST action="{% url 'search-venues' %}">
           {% csrf_token %}

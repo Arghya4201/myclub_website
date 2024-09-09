@@ -4,10 +4,21 @@ from calendar import HTMLCalendar
 from datetime import datetime
 from .models import Event, Venue
 from .forms import VenueForm, EventForm
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect,HttpResponse
 
 
 # Create your views here.
+
+#Generate text file for venue list
+def venues_text(request):
+    Venues = Venue.objects.all()
+    response = HttpResponse(content_type='text/plain')
+    #A blank list
+    list = []
+    for venue in Venues:
+        list.append(f'{venue.name}\n{venue.address}\n{venue.zip_code}\n{venue.phone}\n{venue.web}\n{venue.email}\n\n')
+    response.writelines("%s\n" % venue for venue in list)
+    return response
 def delete_venue(request, venue_id):
     venue = Venue.objects.get(pk=venue_id)
     venue.delete()
@@ -51,7 +62,7 @@ def update_venues(request,venue_id):
 def search_venues(request):
     if(request.method == "POST"):
         #Using POST instead of GET because we are getting data from the form and not from the URL
-        #Seached is the name of the input in the form (see navbar.html the from tag above the search input tag)
+        #Searched is the name of the input in the form (see navbar.html the from tag above the search input tag)
         searched = request.POST["searched"]
         venues = Venue.objects.filter(name__contains=searched)
         return render(request, "events/search_venues.html", {"searched": searched, "venues": venues})
@@ -64,7 +75,7 @@ def show_venue(request, venue_id):
     return render(request, "events/show_venue.html", {"venue": venue})
     
 def list_venues(request):
-    venue_list = Venue.objects.all()
+    venue_list = Venue.objects.all().order_by("name")
     return render(request, "events/venue.html", {"venues": venue_list})
 
 # Readme_myClubWebsite6
@@ -86,7 +97,7 @@ def add_venue(request):
 
 
 def all_events(request):
-    event_list = Event.objects.all()
+    event_list = Event.objects.all().order_by("-event_date")
     return render(request, "events/event_list.html", {"event_list": event_list})
 
 
