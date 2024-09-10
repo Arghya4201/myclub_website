@@ -14,17 +14,17 @@ def login_user(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            messages.success(request, 'You have been logged in!')
+            messages.success(request, 'You have been logged in!', extra_tags='success')
             return redirect('home')
         else:
-            messages.error(request, 'Username or password is incorrect')
+            messages.error(request, 'Username or password is incorrect',extra_tags='danger')
             return redirect('login-user')
     else:
         return render(request, 'authenticate/login.html')
     
 def logout_user(request):
     logout(request)
-    messages.success(request, 'You have been logged out!')
+    messages.error(request, 'You have been logged out!', extra_tags='danger')
     return redirect('home')
 
 def register_user(request):
@@ -37,7 +37,7 @@ def register_user(request):
             password = form.cleaned_data['password1']
             user = authenticate(username=username, password=password)
             login(request, user)
-            messages.success(request, 'You have successfully registered')
+            messages.success(request, 'You have successfully registered', extra_tags='success')
             return redirect('home')
     else:
         form = RegisterUserForm()
