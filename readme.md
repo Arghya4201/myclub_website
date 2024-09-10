@@ -130,3 +130,7 @@ Readme_myClubWebsite8
   . When submitting the updated data the for type is post (submitting the filled form)
   In case of update in both these cases we want to render the update_venue html page so we included both condition in the form, (post and none)
 -> When someone submits data to the form we heck if its valid, save the form and redirect back to the venue list page
+
+Readme_myClubWebsite9
+-> since the UserCreationForm is given by django and there is no html written by us so we add the attribute of class=form-control in the way shown in the above lines. This would bootstrap-ify the attributes
+-> We had added the first_name , last_name and email fields in the registration form by ourselves. But the fields of username , password1 and password2 are auto given by UserCreationForm class so to add attributes to them we need to do it inside the in__it() method as shown
