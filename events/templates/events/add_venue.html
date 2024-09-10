@@ -1,5 +1,7 @@
 {%extends 'events/base.html'%}
+
 {%block content%}
+{% if user.is_authenticated %}
 <center>
     <h1>Add details for the Venue</h1>
     <!-- Fetches the submitted value that was passed thru context -->
@@ -14,4 +16,8 @@
     </form>
     {% endif %}
 </center>
+{% else %}
+<h1>Sorry you need to be logged in to view this page</h1>
+<button type="button" class="btn btn-outline-primary"><a href="{% url 'login-user' %}">Login</a></button>
+{% endif %}
 {%endblock%}
