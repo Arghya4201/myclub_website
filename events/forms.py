@@ -45,6 +45,7 @@ class VenueForm(ModelForm):
 
 class EventForm(ModelForm):
     class Meta:
+        #Defines the model where this form data would go
         model = Event
         fields = "__all__"
 
