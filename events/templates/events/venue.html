@@ -16,15 +16,20 @@
     </tr>
     {% endfor %}
 </table>
-{% if venues_paginated.has_previous %}
-<a href="?page=1">&lAarr;</a>
-<a href="?page={{venues_paginated.previous_page_number}}">&larr;</a>
-{% endif %}
 
-Page {{venues_paginated.number}} of {{venues_paginated.paginator.num_pages}}
-
-{% if venues_paginated.has_next %}
-<a href="?page={{venues_paginated.next_page_number}}">&rarr;</a>
-<a href="?page={{venues_paginated.paginator.num_pages}}">&rAarr;</a>
-{% endif %}
+<nav aria-label="...">
+    <ul class="pagination">
+        <li class="page-item {% if not venues_paginated.has_previous %}disabled{% endif %}">
+            <a class="page-link" href="{% if venues_paginated.has_previous %}?page={{ venues_paginated.previous_page_number }}{% endif %}">Previous</a>
+        </li>        
+      {% for i in venues_paginated.paginator.page_range %}
+      <li class="page-item {% if venues_paginated.number == i %}active{% endif %}">
+        <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+    </li>
+      {% endfor %}
+      <li class="page-item {% if not venues_paginated.has_next %}disabled{% endif %}">
+        <a class="page-link" href="{% if venues_paginated.has_next %}?page={{ venues_paginated.next_page_number }}{% endif %}">Next</a>
+    </li>    
+    </ul>
+  </nav>
 {%endblock%}
