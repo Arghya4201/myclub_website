@@ -30,13 +30,11 @@
         </ul>
         </p>
     </div>
-    {% if user.is_superuser %}
-    {% if user == event.manager %}
+    {% if user.is_superuser or user == event.manager%}
     <div class="card-header">
         <a href="{% url 'update-event' event.id %}" class="btn btn-sm btn-outline-dark">Update</a>
         <a href="{% url 'delete-event' event.id %}" class="btn btn-sm btn-outline-danger">Delete</a>
     </div>
-    {% endif %}
     {% endif %}
 </div>
 {% endfor %}
