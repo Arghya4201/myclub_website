@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.shortcuts import render,redirect
 import calendar
 from calendar import HTMLCalendar
@@ -90,7 +91,11 @@ def delete_venue(request, venue_id):
 
 def delete_event(request, event_id):
     event = Event.objects.get(pk=event_id)
-    event.delete()
+    if request.user == event.manager or request.user.is_superuser:
+        event.delete()
+        messages.success(request, "Event Deleted Successfully", extra_tags="success")
+    else:
+        messages.error(request, "You are not authorized to delete this event", extra_tags="warning")
     return redirect("list-events")
 def add_event(request):
     submitted = False
