@@ -3,6 +3,7 @@ from django.shortcuts import render,redirect
 import calendar
 from calendar import HTMLCalendar
 from datetime import datetime
+from django.contrib.auth.models import User
 from .models import Event, Venue
 from .forms import VenueForm, EventForm, EventFormAdmin
 from django.http import HttpResponseRedirect,HttpResponse
@@ -159,7 +160,10 @@ def search_venues(request):
 def show_venue(request, venue_id):
     #Readme_myClubWebsite7
     venue = Venue.objects.get(pk=venue_id)
-    return render(request, "events/show_venue.html", {"venue": venue})
+    #Getting the Username from the user model referencing the primary key from the venue model
+    #This is a query an now we can also access the other attributes of that user like the user mail, last_name ,etc By writing venue_owner.email in the html page
+    venue_owner = User.objects.get(pk=venue.Owner)
+    return render(request, "events/show_venue.html", {"venue": venue, "venue_owner": venue_owner})
     
 def list_venues(request):
     venue_list = Venue.objects.all().order_by("name")
@@ -175,6 +179,8 @@ def add_venue(request):
         #Creating an object of the VenueForm class
         form = VenueForm(request.POST)
         if form.is_valid():
+            venue = form.save(commit=False)
+            venue.Owner = request.user.id
             form.save()
             return HttpResponseRedirect("/add_venue?submitted=True")
     else:
