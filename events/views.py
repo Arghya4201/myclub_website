@@ -191,7 +191,15 @@ def add_venue(request):
         request, "events/add_venue.html", {"form": form, "submitted": submitted}
     )
 
-
+def my_events(request):
+    if request.user.is_authenticated:
+        current_user = request.user.id
+        event_list = Event.objects.filter(attendees=current_user)
+        return render(request, "events/my_events.html", {"event_list": event_list})
+    else:
+        messages.error(request, "You need to be logged in to view your events", extra_tags="warning")
+        event_list = Event.objects.all().order_by("-event_date")
+        return render(request, "events/event_list.html", {"event_list": event_list})
 def all_events(request):
     event_list = Event.objects.all().order_by("-event_date")
     return render(request, "events/event_list.html", {"event_list": event_list})

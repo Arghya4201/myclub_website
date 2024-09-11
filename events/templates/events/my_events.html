@@ -1,0 +1,43 @@
+{%extends 'events/base.html'%}
+
+{%block content%}
+
+<h1>My Events</h1>
+{% for event in event_list %}
+
+<div class="card my-2">
+    <div class="card-header">
+        <strong>{{event}}</strong>
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">{{event.venue}}</h5>
+        <p class="card-text">
+        <ul>
+            <li>Date: {{event.event_date}}</li>
+            <li>Venue Website: {{event.venue.web}}</li>
+            <li>Manager: {{event.manager}}</li>
+            <li>Description: {{event.description}}</li>
+            <!-- Attendees = event.attendees.all This gives us the whole query set of all the attendees and we have to loop thru to get all of them individually -->
+            Attendees:<br>
+            {%if event.attendees.all %}
+            {% for attendee in event.attendees.all %}
+            {{attendee}}<br>
+            {% endfor %}
+            {% else %}
+            No attendees
+            {% endif %}
+            </br>
+        </ul>
+        </p>
+    </div>
+    {% if user.is_superuser or user == event.manager%}
+    <div class="card-header">
+        <a href="{% url 'update-event' event.id %}" class="btn btn-sm btn-outline-dark">Update</a>
+        <a href="{% url 'delete-event' event.id %}" class="btn btn-sm btn-outline-danger">Delete</a>
+    </div>
+    {% endif %}
+</div>
+{% endfor %}
+
+
+{%endblock%}
