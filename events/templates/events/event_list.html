@@ -4,7 +4,7 @@
 
 <h1>Events</h1>
 {% for event in event_list %}
-
+{% if event.approved %}
 <div class="card my-2">
     <div class="card-header">
         <strong>{{event}}</strong>
@@ -28,6 +28,7 @@
             No attendees
             {% endif %}
             </br>
+            <li>Approved: {{event.approved}}</li>
         </ul>
         </p>
     </div>
@@ -37,7 +38,9 @@
         <a href="{% url 'delete-event' event.id %}" class="btn btn-sm btn-outline-danger">Delete</a>
     </div>
     {% endif %}
+    
 </div>
+{% endif %}
 {% endfor %}
 
 

@@ -23,7 +23,7 @@ class VenueAdmin(admin.ModelAdmin):
 #Making changes to the EventAdmin page
 class EventAdmin(admin.ModelAdmin):
     #Fields to be displayed on the EventAdmin page
-    fields = (('name', 'venue'), 'event_date', 'description', 'manager','attendees')
+    fields = (('name', 'venue'), 'event_date', 'description', 'manager','attendees','approved')
     list_display = ('name', 'event_date', 'venue')
     list_filter = ('event_date', 'venue')
     #Ordering in descending order wrt event_date

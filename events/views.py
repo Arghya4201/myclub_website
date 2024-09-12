@@ -84,7 +84,26 @@ def venues_csv(request):
     for venue in venues:
         writer.writerow([venue.name, venue.address, venue.zip_code, venue.phone, venue.web, venue.email])
     return response
-    
+
+def admin_approval(request):
+    events = Event.objects.all()
+    if request.user.is_superuser:
+        # return render(request, "events/admin_approval.html", {"events": events})
+        if request.method == "POST":
+            id_list = request.POST.getlist("Boxes")
+            # print(id_list)
+            #Unchecking all the boxes before checking because value gets passed only when we check boxes , nothing gets passed on unchecking
+            #checking those ids
+            Event.objects.update(approved=False)
+            for id in id_list:
+                Event.objects.filter(pk=int(id)).update(approved=True)
+            messages.success(request, "Event Approved Successfully", extra_tags="success")
+            return redirect("list-events")
+        else:
+            return render(request, "events/admin_approval.html", {"events": events})
+    else:
+        messages.error(request, "You are not authorized to view this page", extra_tags="warning")
+        return redirect("list-events")    
 def delete_venue(request, venue_id):
     venue = Venue.objects.get(pk=venue_id)
     venue.delete()

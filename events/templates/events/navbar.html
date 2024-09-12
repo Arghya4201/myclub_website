@@ -69,6 +69,11 @@
           <a class="nav-link text-light" href="{% url 'login-user' %}">Login</a>
         </li>
         {% endif %}
+        {% if user.is_superuser %}
+        <li class="nav-item"></li>
+          <a class="nav-link text-light" href="{% url 'admin-approval' %}">Admin Approval</a>
+        </li>
+        {% endif %}
       </ul>
       <ul class="dropdown-menu bg-dark">
         <li><a class="dropdown-item text-light" href="{% url 'add-venue' %}">Add_Venue</a></li>

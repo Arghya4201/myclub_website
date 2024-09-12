@@ -39,6 +39,8 @@ class Event(models.Model):
     # Readme_myClubWebsite4
     manager = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL)
     description = models.TextField(blank=True)
+    #Unapproved By default
+    approved = models.BooleanField('Approved',default=False)
 
 
     def __str__(self):
