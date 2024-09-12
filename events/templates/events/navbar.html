@@ -19,6 +19,7 @@
           {% if user.is_authenticated %}
           <li><a class="dropdown-item text-light" href="{% url 'my-events' %}">My Events</a></li>
           {% endif %}
+          <li><a class="dropdown-item text-light" href="{% url 'search-events' %}">Search Events</a></li>
         </ul>
         </li>
 

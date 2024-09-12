@@ -156,6 +156,14 @@ def search_venues(request):
         return render(request, "events/search_venues.html", {"searched": searched, "venues": venues})
     else:
         return render(request, "events/search_venues.html", {})
+ 
+def search_events(request):
+    if(request.method == "POST"):
+        searched = request.POST["searched"]
+        events = Event.objects.filter(name__contains=searched)
+        return render(request, "events/search_events.html", {"searched": searched, "events": events})
+    else:
+        return render(request, "events/search_events.html", {})    
     
 def show_venue(request, venue_id):
     #Readme_myClubWebsite7
