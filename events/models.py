@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from datetime import datetime
 
 # Create your models here.
 class Venue(models.Model):
@@ -42,3 +43,11 @@ class Event(models.Model):
 
     def __str__(self):
         return self.name
+    
+    #Not adding the property to the model but just creating a property hence no need to make migrations as its not actually getting stored in db
+    @property
+    def Date_till(self):
+        today = datetime.now().date()
+        date_till_event = self.event_date - today
+        date_till_event_stripped = str(date_till_event).split(",",1)[0]
+        return date_till_event_stripped
