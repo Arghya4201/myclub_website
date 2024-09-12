@@ -86,6 +86,10 @@ def venues_csv(request):
     return response
 
 def admin_approval(request):
+    event_count = Event.objects.all().count()
+    venue_count = Venue.objects.all().count()
+    users_count = User.objects.all().count()
+    
     events = Event.objects.all()
     if request.user.is_superuser:
         # return render(request, "events/admin_approval.html", {"events": events})
@@ -100,7 +104,7 @@ def admin_approval(request):
             messages.success(request, "Event Approved Successfully", extra_tags="success")
             return redirect("list-events")
         else:
-            return render(request, "events/admin_approval.html", {"events": events})
+            return render(request, "events/admin_approval.html", {"events": events, "event_count": event_count, "venue_count": venue_count, "users_count": users_count})
     else:
         messages.error(request, "You are not authorized to view this page", extra_tags="warning")
         return redirect("list-events")    

@@ -1,29 +1,46 @@
 {%extends 'events/base.html'%}
 
 {%block content%}
+
 <table class="table table-striped table-hover table-bordered">
-    <h1>Admin Approval Page</h1>
+    <h1>Admin Dashboard</h1>
+
+    <div class="card" style="width: 18rem;">
+        <div class="card-header">
+            Counts
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">Event Count: {{event_count}}</li>
+            <li class="list-group-item">Venue Count: {{venue_count}}</li>
+            <li class="list-group-item">User Count: {{users_count}}</li>
+        </ul>
+    </div>
+
+    <br><br>
+
     <form action="" method="POST">
         {%csrf_token%}
-    {% for event in events %}
-    <tr>
-        <td>
-            {{event.name}}
-        </td>
-        <td>
-            {%if event.approved%}
-            <!-- We are passing event.id as the value while checking/unchecking the checkbox and will use this value to determine if the event is approved or not -->
-            <div class="form-check btn-outline-dark">
-                <input class="form-check-input border border-dark" type="checkbox" value="{{event.id}}" name="Boxes" checked="checked">
-            </div>
-            {% else %}
-            <div class="form-check">
-                <input class="form-check-input border border-dark" type="checkbox" value="{{event.id}}" name="Boxes">
-            </div>
-            {% endif %}
-        </td>
-    </tr>
-    {% endfor %}
+        {% for event in events %}
+        <tr>
+            <td>
+                {{event.name}}
+            </td>
+            <td>
+                {%if event.approved%}
+                <!-- We are passing event.id as the value while checking/unchecking the checkbox and will use this value to determine if the event is approved or not -->
+                <div class="form-check btn-outline-dark">
+                    <input class="form-check-input border border-dark" type="checkbox" value="{{event.id}}" name="Boxes"
+                        checked="checked">
+                </div>
+                {% else %}
+                <div class="form-check">
+                    <input class="form-check-input border border-dark" type="checkbox" value="{{event.id}}"
+                        name="Boxes">
+                </div>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
 </table>
 <br>
 <button type="submit" class="btn btn-outline-dark">Update</button>
