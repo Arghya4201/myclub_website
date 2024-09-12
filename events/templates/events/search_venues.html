@@ -1,15 +1,29 @@
 {%extends 'events/base.html'%}
 
 {%block content%}
-<center>
-    <!-- We passed search through context of views.search_venues method -->
-    {% if searched %}
-    <h1>You searched for {{searched}}</h1>
+<!-- We passed search through context of views.search_venues method -->
+{% if searched %}
+<h1>You searched for {{searched}}</h1>
+<table class="table table-striped table-hover table-bordered">
+    <!-- <h1>Venues...</h1> -->
     {% for venue in venues %}
-    <a href="{% url 'show-venue' venue.id %}">{{venue.name}}</a> <br>
+    <tr>
+        <td>
+            <!-- pointing to show-venue and passing venue id as parameter so it would be /show_venue/id -->
+            <a href="{% url 'show-venue' venue.id %}">{{ venue }}</a> <br>
+        </td>
+        {% if user.is_superuser %}
+        <td>
+            <a href="{% url 'update-venue' venue.id %}" class="btn btn-sm btn-outline-dark">Update</a>
+            <a href="{% url 'delete-venue' venue.id %}" class="btn btn-sm btn-outline-danger">Delete</a>
+        </td>
+        {% endif %}
+    </tr>
     {% endfor %}
-    {% else %}
-    <h1>You did not search for anything</h1>
-    {% endif %}
-</center>
+</table>
+
+{% else %}
+<h1>You did not search for anything</h1>
+{% endif %}
+
 {%endblock%}

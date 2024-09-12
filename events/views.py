@@ -175,7 +175,7 @@ def show_venue(request, venue_id):
     
 def list_venues(request):
     venue_list = Venue.objects.all().order_by("name")
-    p = Paginator(venue_list, 1)
+    p = Paginator(venue_list, 2)
     page = request.GET.get('page')
     venues_paginated = p.get_page(page)
     return render(request, "events/venue.html", {"venues": venue_list, "venues_paginated": venues_paginated})
