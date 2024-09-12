@@ -2,6 +2,7 @@ from django.contrib import admin
 from .models import Event
 from .models import Venue
 from .models import MyClubUser
+from django.contrib.auth.models import Group
 
 # Register your models here.
 
@@ -9,6 +10,8 @@ from .models import MyClubUser
 # admin.site.register(Venue)
 admin.site.register(MyClubUser)
 
+#Uregistering the Group model
+admin.site.unregister(Group)
 # Readme_myClubWebsite4
 @admin.register(Venue)
 class VenueAdmin(admin.ModelAdmin):
