@@ -240,6 +240,9 @@ def home(request, year=datetime.now().year, month=datetime.now().strftime("%B"))
     # Create the calendar
     calendar_instance = HTMLCalendar()  # Create an instance of HTMLCalendar
     cal = calendar_instance.formatmonth(year, month_number)
+    
+    #Querying Events based on current year and month
+    events = Event.objects.filter(event_date__year=year, event_date__month=month_number)
 
     # templates folder is at same level as our appName i.e events, so we write (this events is the one inside template) events/home.html as file location is templates->events->home.html. Here we point to the page what we want to render
     return render(
@@ -255,5 +258,6 @@ def home(request, year=datetime.now().year, month=datetime.now().strftime("%B"))
             "current_date": current_date,
             "current_month": current_month,
             "time": current_time,
+            "events": events
         },
     )
