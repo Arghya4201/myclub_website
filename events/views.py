@@ -141,7 +141,7 @@ def update_event(request, event_id):
 def update_venues(request,venue_id):
     venue = Venue.objects.get(pk=venue_id)
     # Readme_myClubWebsite8
-    form = VenueForm(request.POST or None , instance=venue)
+    form = VenueForm(request.POST or None,request.FILES or None , instance=venue)
     if(form.is_valid()):
         form.save()
         return redirect('list-venues')
@@ -185,7 +185,7 @@ def add_venue(request):
     submitted = False
     if request.method == "POST":
         #Creating an object of the VenueForm class
-        form = VenueForm(request.POST)
+        form = VenueForm(request.POST, request.FILES)
         if form.is_valid():
             venue = form.save(commit=False)
             venue.Owner = request.user.id

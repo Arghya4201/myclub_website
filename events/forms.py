@@ -9,7 +9,7 @@ class VenueForm(ModelForm):
     class Meta:
         model = Venue
         # fields = '__all__'
-        fields = ("name", "address", "zip_code", "phone", "web", "email")
+        fields = ("name", "address", "zip_code", "phone", "web", "email","venue_images")
 
         labels = {
             # Setting all the labels as nothing so nothing will pop above the input boxes
@@ -19,6 +19,7 @@ class VenueForm(ModelForm):
             "phone": "",
             "web": "",
             "email": "",
+            "venue_images": "",
         }
 
         widgets = {

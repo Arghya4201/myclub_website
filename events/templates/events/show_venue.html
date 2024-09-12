@@ -15,7 +15,10 @@
             <li>{{venue.zip_code}}</li>
             <li>Owner: {{venue_owner}}</li>
             <li>Owner Email: {{venue_owner.email}}</li>
-            <a href="{{venue.web}}">{{venue.web}}</a>
+            <a href="{{venue.web}}">{{venue.web}}</a> <br>
+            {% if venue.venue_images %}
+            <img src="{{venue.venue_images.url}}" alt="Venue Image" width="200" height="200">
+            {% endif %}
         </ul>
         </p>
     </div>
