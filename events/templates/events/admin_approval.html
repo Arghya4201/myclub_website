@@ -2,24 +2,57 @@
 
 {%block content%}
 
-<table class="table table-striped table-hover table-bordered">
-    <h1>Admin Dashboard</h1>
 
-    <div class="card" style="width: 18rem;">
-        <div class="card-header">
-            Counts
-        </div>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">Event Count: {{event_count}}</li>
-            <li class="list-group-item">Venue Count: {{venue_count}}</li>
-            <li class="list-group-item">User Count: {{users_count}}</li>
-        </ul>
+<h1>Admin Dashboard</h1>
+
+<div class="card" style="width: 18rem;">
+    <div class="card-header">
+        Counts
     </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">Event Count: {{event_count}}</li>
+        <li class="list-group-item">Venue Count: {{venue_count}}</li>
+        <li class="list-group-item">User Count: {{users_count}}</li>
+    </ul>
+</div>
 
-    <br><br>
+<br><br>
 
+<table class="table table-striped table-hover table-bordered">
     <form action="" method="POST">
         {%csrf_token%}
+        <tr>
+            <td>
+                Venue List
+            </td>
+            <td>
+                Event List
+            </td>
+        </tr>
+        {% for venue in venue_list %}
+        <tr>
+            <td>
+                <a href="{% url 'show-venue' venue.id %}">{{venue}}</a>
+            </td>
+            <td>
+                <a href="{% url 'venue-events' venue.id %}" class="btn btn-outline-dark btn-sm">List Events</a>
+            </td>
+        </tr>
+        {% endfor %}
+</table>
+
+<h3>Event Approval</h3>
+<table class="table table-striped table-hover table-bordered">
+    <form action="" method="POST">
+        {%csrf_token%}
+        <tr>
+            <td>
+                <b>Event Name</b>
+            </td>
+            <td>
+                Approval Status
+            </td>
+        </tr>
         {% for event in events %}
         <tr>
             <td>
@@ -42,7 +75,6 @@
         </tr>
         {% endfor %}
 </table>
-<br>
 <button type="submit" class="btn btn-outline-dark">Update</button>
 
 {%endblock%}

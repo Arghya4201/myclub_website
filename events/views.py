@@ -85,11 +85,21 @@ def venues_csv(request):
         writer.writerow([venue.name, venue.address, venue.zip_code, venue.phone, venue.web, venue.email])
     return response
 
+def venue_events(request, venue_id):
+    venue = Venue.objects.get(pk=venue_id)
+    #Grab the events of that venue (we can use this as these 2 models were linked using foreign key of venue_id)
+    events = venue.event_set.all()
+    if events:
+        return render(request, "events/venue_events.html", {"events": events})
+    else:
+        messages.warning(request, "No Events Found for this venue", extra_tags="warning")
+        return redirect("list-events")
 def admin_approval(request):
     event_count = Event.objects.all().count()
     venue_count = Venue.objects.all().count()
     users_count = User.objects.all().count()
     
+    venue_list = Venue.objects.all()
     events = Event.objects.all()
     if request.user.is_superuser:
         # return render(request, "events/admin_approval.html", {"events": events})
@@ -104,7 +114,7 @@ def admin_approval(request):
             messages.success(request, "Event Approved Successfully", extra_tags="success")
             return redirect("list-events")
         else:
-            return render(request, "events/admin_approval.html", {"events": events, "event_count": event_count, "venue_count": venue_count, "users_count": users_count})
+            return render(request, "events/admin_approval.html", {"events": events, "event_count": event_count, "venue_count": venue_count, "users_count": users_count, "venue_list": venue_list})
     else:
         messages.error(request, "You are not authorized to view this page", extra_tags="warning")
         return redirect("list-events")    
